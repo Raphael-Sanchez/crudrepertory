@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listing Répertoire{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h4 class="center">Contacts</h4>
+                <a class="waves-effect waves-light btn right" href="{{ path('contact_create') }}"><i class="material-icons left">add</i>Nouveau Contact</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <nav>
+                    <div class="nav-wrapper">
+                        <form>
+                            <div class="input-field">
+                                <input id="search" type="search" placeholder="Rechercher un contact...">
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons" id="cancel-search">close</i>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12" id="col-list-contact">
+                {% include 'repertory/listing.html.twig' %}
+            </div>
+            {#<div class="loader-listing">#}
+                {#<div class="preloader-wrapper big center active" id="preloader-listing">#}
+                    {#<div class="spinner-layer spinner-blue-only">#}
+                        {#<div class="circle-clipper left">#}
+                            {#<div class="circle"></div>#}
+                        {#</div><div class="gap-patch">#}
+                            {#<div class="circle"></div>#}
+                        {#</div><div class="circle-clipper right">#}
+                            {#<div class="circle"></div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="center" id="message-preloader">#}
+                    {#Chargement en cours ...#}
+                {#</div>#}
+            {#</div>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            // Call update listing function when research bar is use
+            $('input#search').on('keyup', function (e) {
+                var toSearch = $(this).val().trim();
+                var path = "{{ path('repertory_search_ajax') }}";
+                updateListingByResearch(toSearch, path);
+            });
+
+            // On click on cancel delete value on research bar and call update listing function
+            $('i#cancel-search').on('click', function (e) {
+                e.preventDefault();
+                $('input#search').val('');
+                var toSearch = ' ';
+                var path = "{{ path('repertory_search_ajax') }}";
+                updateListingByResearch(toSearch, path);
+            });
+
+            // Function get new listing filter by "toSearch" value
+            function updateListingByResearch(toSearch, path) {
+                if (toSearch !== undefined && toSearch !== null) {
+                    $.ajax({
+                        url: path,
+                        data: { toSearch: toSearch },
+                        contentType: 'html',
+                        method: 'GET'
+                    }).done(function(response) {
+                        // Load new listing filter by research
+                        $('div#col-list-contact').html(response);
+                        // Reinitialize actions Materialize
+                        reinitializeMaterializeAction();
+                    })
+                }
+            }
+
+            // Reinitialize Materialize action needed
+            function reinitializeMaterializeAction() {
+                $('.dropdown-trigger').dropdown();
+                $(document).ready(function(){
+                $('.modal').modal();
+            })}
+        });
+    </script>
+{% endblock %}

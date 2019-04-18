@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        {# Application CSS #}
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {# Materialize CSS #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('build/materialize.css') }}">
+        {% block stylesheets %}
+        {% endblock %}
+    </head>
+    <header>
+        <nav>
+            <div class="nav-wrapper teal lighten-1">
+                <a href="{{ path('index') }}" class="brand-logo left">&nbsp;Répertoire SF4</a>
+                {#<ul id="nav-mobile" class="right">#}
+                    {#<li><a href="sass.html">Sass</a></li>#}
+                {#</ul>#}
+            </div>
+        </nav>
+    </header>
+    <body>
+        {% block body %}
+        {% endblock %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        {# Scripts Application #}
+        <script src="{{ asset('build/runtime.js') }}"></script>
+        <script src="{{ asset('build/app.js') }}"></script>
+        {# Scripts Materialize #}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="{{ asset('build/materialize.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

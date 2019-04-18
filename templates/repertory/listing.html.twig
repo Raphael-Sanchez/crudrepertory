@@ -1,0 +1,45 @@
+<table class="table-responsive striped">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Téléphone</th>
+        <th class="right">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.lastname|upper }}</td>
+            <td>{{ contact.firstname|capitalize }}</td>
+            <td>{{ contact.phone }}</td>
+            <td class="right">
+                <a class="btn-floating btn-medium waves-effect waves-light blue lighten-2 modal-trigger" href="#modal{{ contact.id }}"><i class="material-icons">assignment_ind</i></a>&nbsp;
+                <a class='dropdown-trigger btn' href='#' data-target='dropdown-{{ contact.id }}'><i class="material-icons">arrow_drop_down</i></a>
+                <ul id='dropdown-{{ contact.id }}' class='dropdown-content'>
+                    <li><a href="{{ path('contact_edit', {'id': contact.id }) }}"><i class="material-icons inline-icon left">edit</i>Modifier Contact</a></li>
+                    <li><a href="{{ path('contact_delete', {'id': contact.id }) }}"><i class="material-icons inline-icon left">delete</i>Supprimer Contact</a></li>
+                </ul>
+            </td>
+        </tr>
+        <div id="modal{{ contact.id }}" class="modal">
+            <div class="modal-content">
+                <h4>{{ contact.firstname|capitalize }} {{ contact.lastname|upper }}</h4>
+                <div class="divider"></div>
+                <ul class="collection">
+                    <li class="collection-item"><i class="material-icons inline-icon left">phone</i>Mobile : {{ contact.phone }}</li>
+                    {% if contact.email is not null %}<li class="collection-item"><i class="material-icons inline-icon left">email</i>Email : {{ contact.email }}</li>{% endif %}
+                    {% if contact.compagny is not null %}<li class="collection-item"><i class="material-icons inline-icon left">business_center</i>Entreprise : {{ contact.compagny }}</li>{% endif %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="modal-close waves-effect waves-green btn red">Fermer</a>
+            </div>
+        </div>
+    {% else %}
+        <tr>
+            <td colspan="4">Aucun contact dans le répertoire.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

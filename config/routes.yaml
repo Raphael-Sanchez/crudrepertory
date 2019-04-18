@@ -1,0 +1,31 @@
+index:
+    path: /
+    controller: App\Controller\RepertoryController::index
+
+contact_create:
+    path:
+        en: /contact/create
+        fr: /creation/contact
+    controller: App\Controller\ContactController::create
+
+contact_edit:
+    path:
+        en: /contact/edit/{id}
+        fr: /edition/contact/{id}
+    controller: App\Controller\ContactController::edit
+    requirements:
+        id: '\d+'
+
+contact_delete:
+    path:
+        en: /contact/delete/{id}
+        fr: /suppression/contact/{id}
+    controller: App\Controller\ContactController::delete
+    requirements:
+        id: '\d+'
+
+repertory_search_ajax:
+    path:
+        en: /repertory/search/ajax
+        fr: /repertoire/recherche/ajax
+    controller: App\Controller\RepertoryController::searchAjax
